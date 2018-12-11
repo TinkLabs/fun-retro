@@ -5,4 +5,4 @@ WORKDIR /app
 RUN npm install gulp -g
 RUN npm install
 
-EXPOSE 4000
+EXPOSE 5000
