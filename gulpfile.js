@@ -18,7 +18,12 @@ gulp.task("express", function() {
   var app = express();
   app.use(connectlivereload({ port: 35729 }));
   app.use(express.static("./dist"));
-  var port = 4000;
+  var port = 5000;
+    app.use('/health', function(req, res) {
+        res.send({
+            status: true
+        });
+    });
   app.listen(port, "0.0.0.0", function() {
     console.log("App running and listening on port", port);
   });
@@ -158,7 +163,7 @@ gulp.task("copy", function() {
   buildHTML();
 });
 
-gulp.task("default", ["bundle", "copy", "express", "livereload", "watch"]);
+gulp.task("default", ["bundle", "copy", "express", ]);
 gulp.task("test", ["lint", "watch-test"]);
 gulp.task("testci", ["lint", "test-once"]);
 gulp.task("build", ["clean-dist", "bundle", "copy"]);
