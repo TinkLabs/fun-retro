@@ -8,5 +8,5 @@ services:
     working_dir: /app
     ports:
     - "5000:5000"
-    command: ["gulp"]
+    command: ["npm", "start"]
     container_name: funretro
