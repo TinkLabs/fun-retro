@@ -1,44 +1,12 @@
 var gulp = require("gulp"),
   clean = require("gulp-clean"),
-  jshint = require("gulp-jshint"),
-  Server = require("karma").Server,
   concat = require("gulp-concat"),
   gp_rename = require("gulp-rename"),
-  uglify = require("gulp-uglify"),
   concatCss = require("gulp-concat-css"),
   uglifycss = require("gulp-uglifycss"),
   sass = require("gulp-sass"),
-  connectlivereload = require("connect-livereload"),
-  express = require("express"),
-  path = require("path"),
-  watch = require("gulp-watch"),
   autoprefixer = require("gulp-autoprefixer");
 
-gulp.task("express", function() {
-  var app = express();
-  app.use(connectlivereload({ port: 35729 }));
-  app.use(express.static("./dist"));
-  var port = 5000;
-    app.use('/health', function(req, res) {
-        res.send({
-            status: true
-        });
-    });
-  app.listen(port, "0.0.0.0", function() {
-    console.log("App running and listening on port", port);
-  });
-});
-
-var tinylr;
-
-function notifyLiveReload(event) {
-  tinylr.changed({ body: { files: [path.relative(__dirname, event.path)] } });
-}
-
-gulp.task("livereload", function() {
-  tinylr = require("tiny-lr")();
-  tinylr.listen(35729);
-});
 
 var buildHTML = function() {
   gulp.src("index.html").pipe(gulp.dest("dist"));
@@ -108,44 +76,6 @@ gulp.task("bundle", function() {
   minifyJS();
 });
 
-gulp.task("watch", function(cb) {
-  watch("dist/*", notifyLiveReload);
-  watch("**/*.html", notifyLiveReload);
-  watch("components/*", buildHTML);
-  watch("**/*.scss", processSass);
-  watch("**/*.scss", notifyLiveReload);
-  watch("js/**/*.js", minifyJS);
-});
-
-gulp.task("lint", function() {
-  return gulp
-    .src(["!js/vendor/**/*.js", "js/**/*.js"])
-    .pipe(jshint(".jshintrc"))
-    .pipe(jshint.reporter("jshint-stylish"));
-});
-
-gulp.task("watch-test", function(done) {
-  return new Server(
-    {
-      configFile: __dirname + "/karma.conf.js",
-      singleRun: false
-    },
-    done
-  ).start();
-});
-
-gulp.task("test-once", function(done) {
-  Server.start(
-    {
-      configFile: __dirname + "/karma.conf.js",
-      singleRun: true,
-      reporters: ["mocha"]
-    },
-    function(error) {
-      done(error);
-    }
-  );
-});
 
 gulp.task("copy", function() {
   gulp
@@ -162,8 +92,4 @@ gulp.task("copy", function() {
 
   buildHTML();
 });
-
-gulp.task("default", ["bundle", "copy", "express", ]);
-gulp.task("test", ["lint", "watch-test"]);
-gulp.task("testci", ["lint", "test-once"]);
-gulp.task("build", ["clean-dist", "bundle", "copy"]);
+gulp.task("default", ["bundle", "copy"]);

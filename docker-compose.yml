@@ -8,5 +8,5 @@ services:
     working_dir: /app
     ports:
     - "5000:5000"
-    command: ["npm", "start"]
+    command: bash -c "cd /app && npm i && gulp && npm run start"
     container_name: funretro
