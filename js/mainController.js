@@ -28,6 +28,8 @@ angular
       $scope.loading = true;
       $scope.messageTypes = utils.messageTypes;
       $scope.utils = utils;
+      $scope.selectedBoard = {};
+      $scope.targetBoard = '';
       $scope.newBoard = {
         name: '',
         text_editing_is_private: true
@@ -47,6 +49,22 @@ angular
       $scope.import = {
         data: [],
         mapping: []
+      };
+      firebaseService.onReceiveBoardData(function (list) {
+        $scope.boardList = [];
+        Object.entries(list).map(function(item) {
+          $scope.boardList.push({
+            id: item[0],
+            boardId: item[1].boardId,
+            boardContext: item[1].boardContext || item[1].boardId
+          });
+        });
+      });
+
+      $scope.goToBoard = function () {
+        var boardObj = JSON.parse($scope.selectedBoard);
+        if (boardObj.id)
+          window.location = '/#'+boardObj.id;
       };
 
       $scope.droppedEvent = function(dragEl, dropEl) {

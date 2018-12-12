@@ -6,7 +6,7 @@ angular
     var mainAuthRef = $firebaseAuth();
 
     function logUser(user, callback) {
-      var email = user + '@fireideaz.com';
+      var email = user + '@tinklabs.com';
       var password = user;
 
       mainAuthRef.$signOut();
@@ -20,7 +20,7 @@ angular
     }
 
     function createUserAndLog(newUser, callback) {
-      var email = newUser + '@fireideaz.com';
+      var email = newUser + '@tinklabs.com';
       var password = newUser;
 
       mainAuthRef.$createUserWithEmailAndPassword(email, password).then(function() {

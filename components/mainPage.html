@@ -1,13 +1,19 @@
 <div class="home" ng-show="userId === ''" ng-cloak>
   <section>
     <h1>
-      <img src="img/logo.png" alt="fun retro logo" />FunRetro
+      <img src="img/footer-teamretro-logo.png" alt="team retro logo" />Tinlabs - Retro
       <br />
       <small>Free Online Retrospective Tool</small>
     </h1>
+    <div>
+      Boards:
+      <select ng-model="selectedBoard">
+        <option value="{{board}}" ng-repeat="board in boardList">{{board.boardContext}}</option>
+      </select>
+      <button ng-click="goToBoard()">Go {{targetBoard}}</button>
+    </div>
 
     <button ng-click="modalService.openAddNewBoard(this)">NEW BOARD</button>
-    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CKYIC5Q7&placement=funretrogithubio" id="_carbonads_js"></script>
   </section>
   <section class="step">
     <h2>Set the context</h2>

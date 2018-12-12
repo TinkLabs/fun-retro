@@ -30,6 +30,12 @@ angular
     function getBoardColumns(userId) {
       return firebase.database().ref('/boards/' + userId + '/columns');
     }
+    function onReceiveBoardData(callback) {
+      firebase.database().ref('/boards').on('value', function(snapshot){
+          var boardList = snapshot.val();
+          callback && callback(boardList);
+      });
+    }
 
     return {
       newFirebaseArray: newFirebaseArray,
@@ -38,6 +44,7 @@ angular
       getMessageRef: getMessageRef,
       getBoardRef: getBoardRef,
       getBoardObjectRef: getBoardObjectRef,
-      getBoardColumns: getBoardColumns
+      getBoardColumns: getBoardColumns,
+        onReceiveBoardData: onReceiveBoardData
     };
   }]);

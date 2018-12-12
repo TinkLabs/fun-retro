@@ -22,6 +22,9 @@ angular
       value: 'To improve'
     }, {
       id: 3,
+      value: 'Went bad'
+    }, {
+      id: 4,
       value: 'Action items'
     }];
 
